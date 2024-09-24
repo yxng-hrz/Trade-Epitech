@@ -1,0 +1,72 @@
+
+## Documentation for Trading Bot
+
+### Overview
+This project involves creating a trading bot capable of analyzing market data and making trading decisions based on various technical indicators. The bot is designed to operate in a high-frequency trading environment, processing orders and adapting to changing market conditions in real-time.
+
+### Classes and Methods
+
+#### Utils
+- **convert_to_float_list(data_list: List[Union[str, float]]) -> List[float]**: Converts a list of strings or floats to a list of floats.
+- **calculate_average(data_list: List[float]) -> float**: Calculates the average of a list of floats.
+- **validate_risk_percentage(risk_percentage: Union[int, str]) -> float**: Validates and converts a risk percentage to a float.
+- **validate_money_saver(money_saver: str) -> bool**: Validates the money saver parameter.
+
+#### VolumeVerifier
+- **verify_volume(volume_list: List[Union[str, float]]) -> bool**: Verifies if the trading volume is within acceptable limits.
+
+#### ConfigLoader
+- **load_config(config_path: str) -> dict**: Loads configuration from a JSON file.
+
+#### IndicatorCalculator
+- **calculate_sma(data_list: List[float]) -> float**: Calculates the Simple Moving Average (SMA).
+- **calculate_std_dev(data_list: List[float]) -> float**: Calculates the standard deviation.
+- **calculate_bollinger_bands(sma: float, std_dev: float) -> List[float]**: Calculates Bollinger Bands.
+- **calculate_bollinger(n: int, closing_prices: List[float]) -> List[float]**: Calculates Bollinger Bands for a given period.
+- **calculing_RSI_func(data: pd.Series, period: int = 14) -> pd.Series**: Calculates the Relative Strength Index (RSI).
+- **compute_ema(period: int, data: List[float]) -> float**: Calculates the Exponential Moving Average (EMA).
+
+#### MarketCandle
+- **__init__(self, format: list, data: str) -> None**: Initializes a market candle with provided data.
+- **__repr__(self) -> str**: Represents the market candle as a string.
+
+#### MarketChart
+- **__init__(self) -> None**: Initializes an empty market chart.
+- **add_candle(self, candle: MarketCandle) -> None**: Adds a market candle to the chart.
+
+#### BotState
+- **__init__(self) -> None**: Initializes the state of the trading bot.
+- **refresh_indicators(self) -> None**: Refreshes the technical indicators.
+- **refresh_market_chart(self, pair: str, new_candle_str: str) -> None**: Updates the market chart with new candle data.
+- **refresh_balance(self, currency: str, amount: float) -> None**: Updates the balance for a specific currency.
+- **refresh_settings(self, key: str, value: str) -> None**: Updates the bot settings.
+- **refresh_game_data(self, key: str, value: str) -> None**: Updates the game data.
+- **_process_next_candles(self, value: str) -> None**: Processes the next candles data.
+- **_process_stacks(self, value: str) -> None**: Processes the stacks data.
+
+#### TradingBot
+- **__init__(self) -> None**: Initializes the trading bot.
+- **retrieve_risk_settings(self) -> Union[list, None]**: Retrieves risk settings from the configuration file.
+- **inspect_position(self, initiated_position, present_price) -> bool**: Inspects the position to decide whether to sell.
+- **operate(self) -> None**: Main loop for operating the trading bot.
+- **process_command(self, command: str) -> None**: Processes a command from the input.
+
+### Usage
+To run the trading bot, execute the main script:
+
+```bash
+python main.py
+```
+
+The bot will continuously read commands, process market data, and make trading decisions based on the implemented algorithms and strategies.
+
+### Configuration
+Ensure that the configuration file (`setting.json`) is correctly set up with the following parameters:
+- `exposure in %`: The risk exposure percentage.
+- `keep dollars`: A boolean indicating whether to keep funds in dollars.
+
+### Trading Logic
+The bot uses a combination of technical indicators such as EMA, RSI, and Bollinger Bands to make trading decisions. The bot evaluates the market conditions and determines whether to buy, sell, or hold positions based on the current indicators and risk settings.
+
+### Evaluation
+The bot's performance will be evaluated based on its ability to maximize profits and adapt to different market conditions without overfitting. Ensure thorough testing with the provided training datasets and be prepared for evaluation with additional datasets.
